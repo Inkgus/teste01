@@ -1124,11 +1124,13 @@ document.getElementById('clientForm').addEventListener('submit', function(e) {
 
   fetch('https://script.google.com/macros/s/AKfycbxCCf-W-UH6MMa9JoGYWx4OIWxlzaqGQ7KTCBnOK87uWbKD9kxLi6azP0geq-TYjLyQ/exec', {
     method: 'POST',
-    body: JSON.stringify(formData),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  body: JSON.stringify(formData),
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  mode: 'cors' // Certifique-se de que o modo seja 'cors'
+})
   .then(response => response.json())
   .then(data => {
     if (data.success) {
