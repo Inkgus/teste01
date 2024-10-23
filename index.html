@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Clientes - Tema Escuro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Gerenciador de Clientes</h1>
+
+    
+
+    <!-- Abas de Navegação -->
+    <div class="tabs">
+        <div class="tab active" data-tab="cadastro">Cadastrar Cliente</div>
+        <div class="tab" data-tab="clientes">Clientes Cadastrados</div>
+        <div class="tab" data-tab="filtros">Filtros</div>
+        <div class="tab" data-tab="logs">Logs de Mensagens</div>
+        <div class="tab" data-tab="calendario">Calendário</div>
+        <div class="tab" data-tab="atendimento">Clientes a Serem Atendidos</div>
+        <div class="tab" data-tab="relatorio">Relatório</div>
+        <div class="tab" data-tab="exportar">Exportar/Importar</div>
+    </div>
+
+    <!-- Conteúdo das Abas -->
+    <div id="cadastro" class="tab-content active">
+        <form id="clientForm">
+            <h2>Cadastrar Cliente</h2>
+            <div>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div>
+                <label for="whatsapp">Número do WhatsApp:</label>
+                <input type="text" id="whatsapp" required placeholder="Ex: 5511999999999">
+            </div>
+            <div>
+                <label for="instagram">Instagram:</label>
+                <input type="text" id="instagram" required placeholder="Ex: usuario_insta">
+            </div>
+            <div>
+                <label for="registrationDate">Data de Cadastramento:</label>
+                <input type="date" id="registrationDate" required>
+            </div>
+            <div>
+                <label for="lastMessageDate">Data da Última Mensagem:</label>
+                <input type="date" id="lastMessageDate" required>
+            </div>
+            <div>
+                <label for="status">Status do Cliente:</label>
+                <select id="status" required>
+                    <option value="Orçamento">Cliente Orçamento</option>
+                    <option value="Ativo">Cliente Ativo</option>
+                    <option value="Cliente Agendado">Cliente Agendado</option>
+                    <option value="Cliente Pós Tattoo">Cliente Pós Tattoo</option>
+                </select>
+            </div>
+            <div id="agendamentoFields" style="display: none;">
+                <div>
+                    <label for="appointmentDate">Data do Atendimento:</label>
+                    <input type="date" id="appointmentDate">
+                </div>
+                <div>
+                    <label for="appointmentTime">Hora do Atendimento:</label>
+                    <input type="time" id="appointmentTime">
+                </div>
+                <div>
+                    <label for="tattooValue">Valor da Tatuagem:</label>
+                    <input type="text" id="tattooValue" placeholder="Ex: 200.00">
+                </div>
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <div id="clientes" class="tab-content">
+        <div class="clients">
+            <h2>Clientes Cadastrados</h2>
+            <div class="table-container">
+                <table id="clientsTable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>WhatsApp</th>
+                            <th>Instagram</th>
+                            <th>Data de Cadastro</th>
+                            <th>Última Mensagem</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Clientes serão listados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="filtros" class="tab-content">
+        <div class="filters">
+            <h2>Filtros</h2>
+            <div>
+                <label for="filterStatus">Filtrar por Status:</label>
+                <select id="filterStatus">
+                    <option value="">Todos</option>
+                    <option value="Orçamento">Cliente Orçamento</option>
+                    <option value="Ativo">Cliente Ativo</option>
+                    <option value="Cliente Agendado">Cliente Agendado</option>
+                    <option value="Cliente Pós Tattoo">Cliente Pós Tattoo</option>
+                </select>
+            </div>
+            <div>
+                <label for="filterTime">Filtrar por Tempo da Última Mensagem:</label>
+                <select id="filterTime">
+                    <option value="">Todos</option>
+                    <option value="20">20 Dias</option>
+                    <option value="2+">2+ Meses</option>
+                </select>
+            </div>
+            <div style="display: flex; justify-content: center;">
+                <button id="applyFilters">Aplicar Filtros</button>
+                <button id="clearFilters" class="clear">Limpar Filtros</button>
+            </div>
+            <div class="message-templates">
+                <h3>Templates de Mensagens</h3>
+                <form id="messageTemplateForm">
+                    <div>
+                        <label for="templateName">Nome do Template:</label>
+                        <input type="text" id="templateName" required>
+                    </div>
+                    <div>
+                        <label for="templateTags">Tags (separadas por vírgula):</label>
+                        <input type="text" id="templateTags" placeholder="Ex: {nome}, {data}, {hora}" required>
+                    </div>
+                    <div>
+                        <label for="templateMessage">Mensagem:</label>
+                        <textarea id="templateMessage" placeholder="Escreva sua mensagem aqui... Use {nome}, {data} e {hora}" required></textarea>
+                    </div>
+                    <button type="submit">Cadastrar Template</button>
+                </form>
+                <div class="templates-list">
+                    <h4>Templates Disponíveis:</h4>
+                    <ul id="templatesList">
+                        <!-- Templates serão listados aqui -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="filtered-clients" style="margin-top: 20px;">
+            <h2>Clientes Filtrados</h2>
+            <div class="select-all">
+                <input type="checkbox" id="selectAll">
+                <label for="selectAll">Selecionar Todos</label>
+            </div>
+            <div class="table-container">
+                <table id="filteredClientsTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nome</th>
+                            <th>WhatsApp</th>
+                            <th>Instagram</th>
+                            <th>Data de Cadastro</th>
+                            <th>Última Mensagem</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Clientes filtrados serão listados aqui -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="message-section">
+                <h2>Enviar Mensagem para Selecionados</h2>
+                <div>
+                    <label for="selectedTemplate">Escolha um Template:</label>
+                    <select id="selectedTemplate">
+                        <option value="">Selecionar Template</option>
+                        <!-- Opções serão adicionadas dinamicamente -->
+                    </select>
+                </div>
+                <button id="sendBulkMessage">Enviar Mensagem</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="logs" class="tab-content">
+        <div class="logs">
+            <h2>Logs de Mensagens</h2>
+            <div class="table-container">
+                <table id="logsTable">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Plataforma</th>
+                            <th>Mensagem</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Logs de mensagens serão listados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="calendario" class="tab-content">
+        <div class="calendar-section">
+            <h2>Calendário de Datas Comemorativas e Atendimentos</h2>
+            <div class="calendar-navigation">
+                <button id="prevMonth">Anterior</button>
+                <div class="calendar-header" id="calendarHeader">Mês e Ano</div>
+                <button id="nextMonth">Próximo</button>
+            </div>
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Dom</th>
+                        <th>Seg</th>
+                        <th>Ter</th>
+                        <th>Qua</th>
+                        <th>Qui</th>
+                        <th>Sex</th>
+                        <th>Sáb</th>
+                    </tr>
+                </thead>
+                <tbody id="calendarBody">
+                    <!-- Calendário será gerado aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="atendimento" class="tab-content">
+        <div class="atendimento-section">
+            <h2>Clientes a Serem Atendidos</h2>
+            <div class="table-container">
+                <table id="atendimentoTable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>WhatsApp</th>
+                            <th>Instagram</th>
+                            <th>Data de Cadastro</th>
+                            <th>Status</th>
+                            <th>Data do Atendimento</th>
+                            <th>Hora do Atendimento</th>
+                            <th>Valor da Tatuagem</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Clientes a serem atendidos serão listados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="relatorio" class="tab-content">
+        <div class="relatorio-section">
+            <h2>Relatórios</h2>
+            <div class="relatorio-filtros">
+                <h3>Filtros de Relatório</h3>
+                <div>
+                    <label for="relatorioTipo">Tipo de Relatório:</label>
+                    <select id="relatorioTipo">
+                        <option value="mes">Mensal</option>
+                        <option value="periodo">Período</option>
+                        <option value="comparar">Comparar Períodos</option>
+                    </select>
+                </div>
+                <div id="relatorioMes" style="display: block;">
+                    <label for="relatorioSelecionarMes">Selecione o Mês:</label>
+                    <input type="month" id="relatorioSelecionarMes">
+                </div>
+                <div id="relatorioPeriodo" style="display: none;">
+                    <label for="relatorioInicio">Início:</label>
+                    <input type="date" id="relatorioInicio">
+                    <label for="relatorioFim">Fim:</label>
+                    <input type="date" id="relatorioFim">
+                </div>
+                <div id="relatorioComparar" style="display: none;">
+                    <label for="relatorioCompararInicio1">Início do Período 1:</label>
+                    <input type="date" id="relatorioCompararInicio1">
+                    <label for="relatorioCompararFim1">Fim do Período 1:</label>
+                    <input type="date" id="relatorioCompararFim1">
+                    <label for="relatorioCompararInicio2">Início do Período 2:</label>
+                    <input type="date" id="relatorioCompararInicio2">
+                    <label for="relatorioCompararFim2">Fim do Período 2:</label>
+                    <input type="date" id="relatorioCompararFim2">
+                </div>
+                <button id="gerarRelatorio">Gerar Relatório</button>
+            </div>
+
+            <div class="relatorio-result">
+                <h3>Resultado do Relatório</h3>
+                <div id="relatorioOutput">
+                    <!-- Resultado será exibido aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="exportar" class="tab-content">
+        <div class="exportar-section">
+            <h2>Exportar/Importar Dados</h2>
+            <div class="exportar-buttons">
+                <button id="exportarDados">Exportar Dados</button>
+            </div>
+            <div class="importar-buttons">
+                <h3>Importar Dados</h3>
+                <input type="file" id="importarArquivo" accept=".json">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

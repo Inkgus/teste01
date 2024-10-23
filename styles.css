@@ -1,0 +1,218 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #1e1e1e;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.tab.active, .tab:hover {
+    background-color: #333333;
+}
+
+.tab-content {
+    display: none;
+    margin-top: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="date"], input[type="time"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #555555;
+    border-radius: 4px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #444444;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555555;
+}
+
+button.clear {
+    background-color: #ff4d4d;
+}
+
+button.clear:hover {
+    background-color: #ff1a1a;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333333;
+}
+
+th {
+    background-color: #2c2c2c;
+}
+
+.actions button {
+    margin-right: 5px;
+    padding: 5px 10px;
+}
+
+.events-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #555555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.event:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-header {
+    margin: 0 20px;
+    font-size: 1.2em;
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.calendar-table th, .calendar-table td {
+    width: 14.28%;
+    height: 100px;
+    border: 1px solid #333333;
+    vertical-align: top;
+    position: relative;
+}
+
+.date-number {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-weight: bold;
+}
+
+.event {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    cursor: pointer;
+}
+
+.event .tooltip {
+    width: max-content;
+    max-width: 200px;
+}
+
+.relatorio-filtros div {
+    margin-bottom: 10px;
+}
+
+.relatorio-filtros label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.relatorio-result {
+    margin-top: 20px;
+}
+
+.exportar-buttons, .importar-buttons {
+    margin-top: 20px;
+}
+
+.importar-buttons input {
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #555555;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .calendar-table th, .calendar-table td {
+        height: 80px;
+    }
+}
